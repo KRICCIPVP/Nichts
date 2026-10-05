@@ -1,0 +1,46 @@
+name: iOS Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v4
+
+      - name: Node installieren
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: iOS Dateien aktualisieren
+        run: npx cap copy ios
+
+      - name: iOS App bauen
+        run: |
+          xcodebuild \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -sdk iphoneos \
+            -configuration Debug \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+
+      - name: App als ZIP speichern
+        run: |
+          cd ios/App/build/Build/Products/Debug-iphoneos
+          zip -r nichts-iOS.zip App.app
+
+      - name: Build herunterladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: nichts-iOS
+          path: ios/App/build/Build/Products/Debug-iphoneos/nichts-iOS.zip
