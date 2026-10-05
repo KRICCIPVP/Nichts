@@ -1,4 +1,4 @@
-name: iOS Build
+name: nichts iOS Build
 
 on:
   workflow_dispatch:
