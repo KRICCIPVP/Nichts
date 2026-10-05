@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">nichts</string>
+    <string name="title_activity_main">nichts</string>
+    <string name="package_name">com.nichts.app</string>
+    <string name="custom_url_scheme">com.nichts.app</string>
+</resources>

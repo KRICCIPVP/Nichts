@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nichts</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="nothing"></div>
+
+    <script>
+        const container = document.getElementById("nothing");
+
+        for (let i = 0; i < 300; i++) {
+            const text = document.createElement("span");
+            text.textContent = "nichts";
+            container.appendChild(text);
+        }
+    </script>
+
+</body>
+</html>
+
