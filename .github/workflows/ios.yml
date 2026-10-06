@@ -17,12 +17,18 @@ jobs:
           node-version: 24
 
       - name: Abhängigkeiten installieren
-        run: npm ci
+        run: npm install
+
+      - name: Capacitor prüfen
+        run: npx cap doctor
 
       - name: iOS Dateien aktualisieren
         run: npx cap copy ios
 
-      - name: iOS App bauen
+      - name: Xcode Version
+        run: xcodebuild -version
+
+      - name: iOS bauen
         run: |
           xcodebuild \
             -project ios/App/App.xcodeproj \
@@ -33,14 +39,3 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             build
-
-      - name: App als ZIP speichern
-        run: |
-          cd ios/App/build/Build/Products/Debug-iphoneos
-          zip -r nichts-iOS.zip App.app
-
-      - name: Build herunterladen
-        uses: actions/upload-artifact@v4
-        with:
-          name: nichts-iOS
-          path: ios/App/build/Build/Products/Debug-iphoneos/nichts-iOS.zip
