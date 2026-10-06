@@ -8,27 +8,21 @@ jobs:
     runs-on: macos-15
 
     steps:
-      - name: Repository laden
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Node installieren
+      - name: Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
 
-      - name: Abhängigkeiten installieren
+      - name: Install
         run: npm install
 
-      - name: Capacitor prüfen
-        run: npx cap doctor
-
-      - name: iOS Dateien aktualisieren
+      - name: Capacitor copy
         run: npx cap copy ios
 
-      - name: Xcode Version
-        run: xcodebuild -version
-
-      - name: iOS bauen
+      - name: Xcode build
         run: |
           xcodebuild \
             -project ios/App/App.xcodeproj \
