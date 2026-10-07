@@ -37,8 +37,14 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             build
 
+      - name: Find iOS build
+        run: |
+          echo "Suche nach App.app..."
+          find ios -name "App.app" -type d -print
+
       - name: Upload iOS build
         uses: actions/upload-artifact@v4
         with:
           name: nichts-ios-build
-          path: ios/App/build/Debug-iphoneos/App.app
+          path: |
+            ios/**/App.app
