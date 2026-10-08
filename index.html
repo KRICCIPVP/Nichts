@@ -53,15 +53,34 @@ let currentSlide = 1;
 const slides = document.querySelectorAll(".slide");
 const startButton = document.getElementById("startButton");
 
+
+// Prüfen, ob wirklich die installierte App geöffnet wurde
 function isHomeScreenApp() {
 
-    return (
-        window.matchMedia("(display-mode: standalone)").matches ||
-        window.matchMedia("(display-mode: fullscreen)").matches ||
-        window.navigator.standalone === true
-    );
+    const standalone =
+        window.matchMedia("(display-mode: standalone)").matches;
 
+    const iosStandalone =
+        window.navigator.standalone === true;
+
+    return standalone || iosStandalone;
 }
+
+
+// Start
+startButton.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    // Im normalen Browser passiert ABSOLUT NICHTS
+    if (!isHomeScreenApp()) {
+        return;
+    }
+
+    nextSlide();
+
+});
+
 
 function nextSlide() {
 
@@ -72,6 +91,7 @@ function nextSlide() {
     currentSlide++;
 
     slides[currentSlide - 1].classList.add("active");
+
 
     if (currentSlide === 6) {
 
@@ -92,19 +112,7 @@ function nextSlide() {
 }
 
 
-// Start funktioniert nur als Home-Screen-App
-startButton.addEventListener("click", function(event) {
-
-    event.stopPropagation();
-
-    if (isHomeScreenApp()) {
-        nextSlide();
-    }
-
-});
-
-
-// Folien 2–5: Tippen = nächste Folie
+// Folien 2–5
 document.addEventListener("click", function() {
 
     if (currentSlide >= 2 && currentSlide < 6) {
