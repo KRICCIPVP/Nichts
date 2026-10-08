@@ -9,37 +9,43 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Präsentation">
 
-    <title>Präsentation</title>
-<link rel="manifest"
- href="manifest.json">
+    <link rel="manifest" href="manifest.json">
 
+    <title>Präsentation</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div id="presentation">
 
+    <!-- Folie 1 -->
     <section class="slide active" id="slide1">
         <h1>PRÄSENTATION</h1>
         <button id="startButton">▶ Start</button>
     </section>
 
+    <!-- Folie 2 -->
     <section class="slide" id="slide2">
         <h1>🎉 ÜBERRASCHUNG 🎉</h1>
     </section>
 
+    <!-- Folie 3 -->
     <section class="slide" id="slide3">
         <h1>3</h1>
     </section>
 
+    <!-- Folie 4 -->
     <section class="slide" id="slide4">
         <h1>2</h1>
     </section>
 
+    <!-- Folie 5 -->
     <section class="slide" id="slide5">
         <h1>1</h1>
     </section>
 
+    <!-- Folie 6 -->
     <section class="slide" id="slide6">
         <div id="nothing"></div>
     </section>
@@ -47,20 +53,11 @@
 </div>
 
 <script>
+
 let currentSlide = 1;
 
 const slides = document.querySelectorAll(".slide");
 const startButton = document.getElementById("startButton");
-
-function isHomeScreenApp() {
-
-    return (
-        window.matchMedia("(display-mode: standalone)").matches ||
-        window.matchMedia("(display-mode: fullscreen)").matches ||
-        window.navigator.standalone === true
-    );
-
-}
 
 function nextSlide() {
 
@@ -87,22 +84,26 @@ function nextSlide() {
     }
 }
 
-startButton.addEventListener("click", function() {
 
-    if (isHomeScreenApp()) {
-        nextSlide();
-    }
+// Start-Button
+startButton.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    nextSlide();
 
 });
 
-// Auf Folien 2–5 reicht ein Tippen
-document.addEventListener("click", function(event) {
+
+// Auf Folien 2–5: Tippen = nächste Folie
+document.addEventListener("click", function() {
 
     if (currentSlide >= 2 && currentSlide < 6) {
         nextSlide();
     }
 
 });
+
 </script>
 
 </body>
