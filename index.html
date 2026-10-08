@@ -3,23 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nichts</title>
-    <link rel="stylesheet" href="style.css">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Präsentation">
+
+    <title>Präsentation</title>
+<link rel="manifest"
+ href="manifest.json">
+
 </head>
+
 <body>
 
-    <div id="nothing"></div>
+<div id="presentation">
 
-    <script>
+    <section class="slide active" id="slide1">
+        <h1>PRÄSENTATION</h1>
+        <button id="startButton">▶ Start</button>
+    </section>
+
+    <section class="slide" id="slide2">
+        <h1>🎉 ÜBERRASCHUNG 🎉</h1>
+    </section>
+
+    <section class="slide" id="slide3">
+        <h1>3</h1>
+    </section>
+
+    <section class="slide" id="slide4">
+        <h1>2</h1>
+    </section>
+
+    <section class="slide" id="slide5">
+        <h1>1</h1>
+    </section>
+
+    <section class="slide" id="slide6">
+        <div id="nothing"></div>
+    </section>
+
+</div>
+
+<script>
+let currentSlide = 1;
+
+const slides = document.querySelectorAll(".slide");
+const startButton = document.getElementById("startButton");
+
+function isHomeScreenApp() {
+
+    return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: fullscreen)").matches ||
+        window.navigator.standalone === true
+    );
+
+}
+
+function nextSlide() {
+
+    if (currentSlide >= 6) return;
+
+    slides[currentSlide - 1].classList.remove("active");
+
+    currentSlide++;
+
+    slides[currentSlide - 1].classList.add("active");
+
+    if (currentSlide === 6) {
+
         const container = document.getElementById("nothing");
 
         for (let i = 0; i < 300; i++) {
+
             const text = document.createElement("span");
+
             text.textContent = "nichts";
+
             container.appendChild(text);
         }
-    </script>
+    }
+}
+
+startButton.addEventListener("click", function() {
+
+    if (isHomeScreenApp()) {
+        nextSlide();
+    }
+
+});
+
+// Auf Folien 2–5 reicht ein Tippen
+document.addEventListener("click", function(event) {
+
+    if (currentSlide >= 2 && currentSlide < 6) {
+        nextSlide();
+    }
+
+});
+</script>
 
 </body>
 </html>
-
