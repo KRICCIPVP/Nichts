@@ -19,33 +19,27 @@
 
 <div id="presentation">
 
-    <!-- Folie 1 -->
     <section class="slide active" id="slide1">
         <h1>PRÄSENTATION</h1>
         <button id="startButton">▶ Start</button>
     </section>
 
-    <!-- Folie 2 -->
     <section class="slide" id="slide2">
         <h1>🎉 ÜBERRASCHUNG 🎉</h1>
     </section>
 
-    <!-- Folie 3 -->
     <section class="slide" id="slide3">
         <h1>3</h1>
     </section>
 
-    <!-- Folie 4 -->
     <section class="slide" id="slide4">
         <h1>2</h1>
     </section>
 
-    <!-- Folie 5 -->
     <section class="slide" id="slide5">
         <h1>1</h1>
     </section>
 
-    <!-- Folie 6 -->
     <section class="slide" id="slide6">
         <div id="nothing"></div>
     </section>
@@ -58,6 +52,16 @@ let currentSlide = 1;
 
 const slides = document.querySelectorAll(".slide");
 const startButton = document.getElementById("startButton");
+
+function isHomeScreenApp() {
+
+    return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: fullscreen)").matches ||
+        window.navigator.standalone === true
+    );
+
+}
 
 function nextSlide() {
 
@@ -80,22 +84,27 @@ function nextSlide() {
             text.textContent = "nichts";
 
             container.appendChild(text);
+
         }
+
     }
+
 }
 
 
-// Start-Button
+// Start funktioniert nur als Home-Screen-App
 startButton.addEventListener("click", function(event) {
 
     event.stopPropagation();
 
-    nextSlide();
+    if (isHomeScreenApp()) {
+        nextSlide();
+    }
 
 });
 
 
-// Auf Folien 2–5: Tippen = nächste Folie
+// Folien 2–5: Tippen = nächste Folie
 document.addEventListener("click", function() {
 
     if (currentSlide >= 2 && currentSlide < 6) {
